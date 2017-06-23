@@ -1,0 +1,11 @@
+stages:
+- deploy
+
+deploy:
+  stage: deploy
+  only:
+    - master
+  script:
+    - echo "$PRIVATE_KEY" > id_rsa
+    - chmod 600 id_rsa
+    - ssh -o StrictHostKeyChecking=no -i id_rsa ec2-user@34.195.215.147 'cd aws-sample && deploy.sh'
